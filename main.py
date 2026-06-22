@@ -25,14 +25,10 @@ class Transit:
 
         lc_normflux = lc_fluxes/med_value
 
+        self.time = lc_times
         self.norm_flux = lc_normflux
 
-        max_val = 900
-        min_val = 200
-
-        mapped_flux = (lc_normflux - np.nanmin(lc_normflux)) / (np.nanmax(lc_normflux) - np.nanmin(lc_normflux)) * (max_val - min_val) + min_val
-
-        self.mapped_flux = mapped_flux
+    
 
 
     def make_sound(self, max_val=900, min_val=200):
