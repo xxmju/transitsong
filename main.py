@@ -70,7 +70,8 @@ sector = 33
 planet = Transit(tic, sector)
 planet.make_sound_arr()
 
-
+# feature 2 code 
+print("i am in feature 2")
 
 
 
