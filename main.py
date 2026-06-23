@@ -63,14 +63,22 @@ class Transit:
 
 
     def make_video(self):
-        x = self.time
-        y = self.mapped_flux
+
+        # Original time
+        x_raw = self.time
+        y_raw = self.norm_flux
+
+        # Removing nans
+        y = y_raw[~np.isnan(y_raw)]
+        x = x_raw[~np.isnan(y_raw)]
 
         
         fig, ax = plt.subplots()
         line, = ax.plot([], [], marker='o', linestyle='', color='b') 
+        ax.set_xlabel('Time (days)')
+        ax.set_ylabel('Normalized Flux')
         ax.set_xlim(self.time[0], self.time[-1])
-        ax.set_ylim(np.nanmin(self.mapped_flux)-20, np.nanmax(self.mapped_flux)+50)
+        ax.set_ylim(np.nanmin(self.norm_flux)-0.5, np.nanmax(self.norm_flux)+0.5)
 
         
         def update(frame):
