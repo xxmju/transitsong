@@ -3,6 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io.wavfile import write 
 import sounddevice as sd
+import matplotlib.animation as animation
+from moviepy import *
+from moviepy.video.fx import MultiplySpeed
 
 
 class Transit:
@@ -56,11 +59,58 @@ class Transit:
         audio_arr = np.array(audio)
         self.audio_arr = audio_arr
 
-        write(f"TIC{self.tic}_S{self.sector}_TRANSITSONG.wav", samplerate, audio_arr)
+        write(f"TIC{self.tic}_S{self.sector}_SONG.wav", samplerate, audio_arr)
 
 
-    #def make_animation(self):
+    def make_video(self):
+        x = self.time
+        y = self.mapped_flux
+
         
+        fig, ax = plt.subplots()
+        line, = ax.plot([], [], marker='o', linestyle='', color='b') 
+        ax.set_xlim(self.time[0], self.time[-1])
+        ax.set_ylim(np.nanmin(self.mapped_flux)-20, np.nanmax(self.mapped_flux)+50)
+
+        
+        def update(frame):
+            
+            line.set_data(x[:frame], y[:frame])
+            return line,
+
+        
+        ani = animation.FuncAnimation(
+            fig, update, frames=len(x), interval=50, repeat=True
+        )
+        ani.save(f"TIC{self.tic}_S{self.sector}_DANCE.mp4", writer='ffmpeg', fps=30)
+        #plt.show()
+
+    def combine(self):
+        video_clip = VideoFileClip(f"TIC{self.tic}_S{self.sector}_DANCE.mp4", audio=False)
+        audio_clip = AudioFileClip(f"TIC{self.tic}_S{self.sector}_SONG.wav")
+
+
+        video_factor = video_clip.duration / audio_clip.duration
+
+        
+        video_clip = video_clip.with_effects([MultiplySpeed(video_factor)])
+
+        
+        final_clip = video_clip.with_audio(audio_clip)
+
+        
+        final_clip.write_videofile(
+            f"TIC{self.tic}_S{self.sector}_FINAL.mp4", 
+            codec="libx264", 
+            audio_codec="aac", 
+            temp_audiofile="temp-audio.m4a",  
+            remove_temp=True,                 
+        )
+
+       
+        video_clip.close()
+        audio_clip.close()
+        final_clip.close()
 
 #def play_song(Transit):
     # here is where we do the simultaneous thing?
@@ -69,6 +119,8 @@ sector = 33
 
 planet = Transit(tic, sector)
 planet.make_sound_arr()
+planet.make_video()
+planet.combine()
 
-print('test')
+
 
