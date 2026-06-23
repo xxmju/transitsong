@@ -22,6 +22,8 @@ class Transit:
 
         lc = search_result.download()
 
+        print("Successfully loaded lightcurve for TIC {} in sector {}".format(tic, sector))
+
         lc_binned = lc.bin(time_bin_size=0.01)
 
         lc_fluxes = lc_binned.flux.value
@@ -32,6 +34,7 @@ class Transit:
 
         self.time = lc_times
         self.norm_flux = lc_normflux
+
 
 
     def make_sound_arr(self, max_val=900, min_val=200):
@@ -60,6 +63,10 @@ class Transit:
         self.audio_arr = audio_arr
 
         write(f"TIC{self.tic}_S{self.sector}_SONG.wav", samplerate, audio_arr)
+        print("Playing audio...")
+
+        sd.play(audio_arr, samplerate)
+        sd.wait()
 
 
     def make_video(self):
