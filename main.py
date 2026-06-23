@@ -1,6 +1,7 @@
 import lightkurve as lk
 import matplotlib.pyplot as plt 
 import numpy as np
+from scipy.io.wavfile import write 
 import sounddevice as sd
 
 
@@ -55,8 +56,7 @@ class Transit:
         audio_arr = np.array(audio)
         self.audio_arr = audio_arr
 
-        sd.play(audio_arr, samplerate)
-        sd.wait()
+        write(f"TIC{self.tic}_S{self.sector}_TRANSITSONG.wav", samplerate, audio_arr)
 
 
     #def make_animation(self):
@@ -70,9 +70,5 @@ sector = 33
 planet = Transit(tic, sector)
 planet.make_sound_arr()
 
-# feature 2 code 
-print("i am in feature 2")
-
-
-
+print('test')
 
