@@ -17,6 +17,5 @@ dependencies = [
     "lightkurve",
     "matplotlib",
     "scipy",
-    "moviepy",
-    "os"
+    "moviepy"
 ]

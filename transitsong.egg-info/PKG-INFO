@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: transitsong
+Version: 0.0.1
+Requires-Dist: numpy
+Requires-Dist: sounddevice
+Requires-Dist: lightkurve
+Requires-Dist: matplotlib
+Requires-Dist: scipy
+Requires-Dist: moviepy
+Requires-Dist: os
