@@ -7,6 +7,9 @@ import matplotlib.animation as animation
 from moviepy import *
 from moviepy.video.fx import MultiplySpeed
 
+# set matplotlib preferences
+#plt.style.use(path + 'text.mplstyle')
+
 
 class Transit:
     def __init__(self, tic, sector, window = None):
