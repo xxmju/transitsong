@@ -6,6 +6,8 @@ import sounddevice as sd
 import matplotlib.animation as animation
 from moviepy import *
 from moviepy.video.fx import MultiplySpeed
+import os 
+from pathlib import Path
 
 # set matplotlib preferences
 #plt.style.use(path + 'text.mplstyle')
@@ -40,7 +42,6 @@ class Transit:
 
         self.time = lc_times
         self.norm_flux = lc_fluxes
-
 
 
         if window is not None:
@@ -81,7 +82,13 @@ class Transit:
         audio_arr = np.array(audio)
         self.audio_arr = audio_arr
 
-        write(f"TIC{self.tic}_S{self.sector}_SONG.wav", samplerate, audio_arr)
+        song_path = os.getcwd() + "/song/"
+        self.song_path = song_path
+        if not os.path.isdir(song_path):
+            directory = Path(song_path)
+            directory.mkdir(parents=True, exist_ok=True)
+
+        write(song_path + f"TIC{self.tic}_S{self.sector}_SONG.wav", samplerate, audio_arr)
 
         # colors
         cmap = plt.cm.magma
@@ -131,13 +138,19 @@ class Transit:
         ani = animation.FuncAnimation(
             fig, update, frames=len(x), interval=50, repeat=True
         )
-        ani.save(f"TIC{self.tic}_S{self.sector}_DANCE.mp4", writer='ffmpeg', fps=30)
+
+        dance_path = os.getcwd() + "/dance/"
+        self.dance_path = dance_path
+        if not os.path.isdir(dance_path):
+            directory = Path(dance_path)
+            directory.mkdir(parents=True, exist_ok=True)
+
+        ani.save(dance_path + f"TIC{self.tic}_S{self.sector}_DANCE.mp4", writer='ffmpeg', fps=30)
         #plt.show()
 
     def combine(self):
-        video_clip = VideoFileClip(f"TIC{self.tic}_S{self.sector}_DANCE.mp4", audio=False)
-        audio_clip = AudioFileClip(f"TIC{self.tic}_S{self.sector}_SONG.wav")
-
+        video_clip = VideoFileClip(self.dance_path + f"TIC{self.tic}_S{self.sector}_DANCE.mp4", audio=False)
+        audio_clip = AudioFileClip(self.song_path + f"TIC{self.tic}_S{self.sector}_SONG.wav")
 
         video_factor = video_clip.duration / audio_clip.duration
 
@@ -147,9 +160,13 @@ class Transit:
         
         final_clip = video_clip.with_audio(audio_clip)
 
-        
+        song_and_dance_path = os.getcwd() + "/song_and_dance/"
+        if not os.path.isdir(song_and_dance_path):
+            directory = Path(song_and_dance_path)
+            directory.mkdir(parents=True, exist_ok=True)
+
         final_clip.write_videofile(
-            f"TIC{self.tic}_S{self.sector}_FINAL.mp4", 
+            song_and_dance_path + f"TIC{self.tic}_S{self.sector}_FINAL.mp4", 
             codec="libx264", 
             audio_codec="aac", 
             temp_audiofile="temp-audio.m4a",  
