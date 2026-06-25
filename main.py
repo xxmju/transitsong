@@ -19,13 +19,20 @@ class Transit:
         self.sector = sector
         self.window = window
 
-        search_result = lk.search_lightcurve(
-            f"TIC {tic}",
-            mission="TESS",
-            author="SPOC",
-            sector =[sector] )
+        try:
+            search_result = lk.search_lightcurve(
+                f"TIC {tic}",
+                mission="TESS",
+                author="SPOC",
+                sector =[sector] )
+            
+            lc = search_result.download()
+            self.success = True
 
-        lc = search_result.download()
+        except Exception as e:
+            self.success = False
+            raise ValueError("Failed to load lightcurve for TIC {} in sector {}: {}".format(tic, sector, str(e)))
+        
 
         print("Successfully loaded lightcurve for TIC {} in sector {}".format(tic, sector))
 
