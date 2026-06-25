@@ -189,6 +189,18 @@ class Transit:
         #plt.show()
 
     def combine(self):
+        """Combines video and audio
+
+        Makes the final video product with the audio (corresponding to flux) and the animated lightcurve. 
+        Saves as .mp4 in subdirectory "song_and_dance".
+
+        Args:
+            None.
+        
+        Returns:
+            Nothing.
+        """
+
         video_clip = VideoFileClip(self.dance_path + f"TIC{self.tic}_S{self.sector}_DANCE.mp4", audio=False)
         audio_clip = AudioFileClip(self.song_path + f"TIC{self.tic}_S{self.sector}_SONG.wav")
 
