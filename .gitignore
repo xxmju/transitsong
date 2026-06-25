@@ -1,0 +1,7 @@
+transitsong/dance/
+transitsong/song/
+transitsong/song_and_dance/
+*.mp4
+*.wav
+.ipynb_checkpoints
+docs/
