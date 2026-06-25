@@ -1,0 +1,7 @@
+numpy
+sounddevice
+lightkurve
+matplotlib
+scipy
+moviepy
+os

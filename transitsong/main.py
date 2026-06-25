@@ -14,6 +14,14 @@ from pathlib import Path
 
 
 class Transit:
+    """A program that makes an animation with audio for an input TESS lightcurve.
+
+    Attributes:
+        tic (int or str): TESS Input Catalog number
+        sector (int): TESS sector number
+        window (list of length 2): start and end days of sector
+    """
+
     def __init__(self, tic, sector, window = None):
         self.tic = tic
         self.sector = sector
@@ -58,6 +66,17 @@ class Transit:
 
     
     def make_sound_arr(self, max_val=900, min_val=200):
+        """Sound array
+
+        Make sound array as .wav file, higher pitch corresponds to higher flux. Saves to subdirectory "song."
+
+        Args:
+            max_val (int or float): maximum Hz frequency
+            min_val (int or float): minimum Hz frequency
+        
+        Returns:
+            Nothing.
+        """
 
         mapped_flux = (self.norm_flux - np.nanmin(self.norm_flux)) / (np.nanmax(self.norm_flux) - np.nanmin(self.norm_flux)) * (max_val - min_val) + min_val
 
@@ -106,7 +125,16 @@ class Transit:
 
 
     def make_video(self):
+        """Video file
 
+        Makes animated plot of lightcurve, lighter color corresponds to higher flux. Saves as .mp4 in subdirectory "dance".
+        
+        Args:
+            None.
+
+        Returns:
+            Nothing.
+        """
         # Original time
         x_raw = self.time
         y_raw = self.norm_flux
@@ -194,14 +222,14 @@ class Transit:
 # sector = 32 #96
 # window = [2196, 2198.5]
 
-tic = 263930790
-sector = 73
-window = [3293, 3299]
+# tic = 263930790
+# sector = 73
+# window = [3293, 3299]
 
-planet = Transit(tic, sector, window=window)
-planet.make_sound_arr()
-planet.make_video()
-planet.combine()
+# planet = Transit(tic, sector, window=window)
+# planet.make_sound_arr()
+# planet.make_video()
+# planet.combine()
 
 
 #55652896, 38, 63
