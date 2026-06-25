@@ -1,5 +1,5 @@
 # transitsong
-Sonification of TESS transits between 200-900 Hz. 
+Sonification of TESS lightcurves between 200-900 Hz. 
 
 ## How to install:
 ```pip install transitsong```
