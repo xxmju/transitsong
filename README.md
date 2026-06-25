@@ -18,4 +18,4 @@ Sonification of TESS transits between 200-900 Hz.
 ```transit = Transit(tic_id, sector, window)```<br>
 - tic_id: str
 - sector: int
-- window: list of length 2, start and end of desired section (Barycentric TESS Julian Date)
+- window (optional): list of length 2, start and end of desired section (Barycentric TESS Julian Date)
