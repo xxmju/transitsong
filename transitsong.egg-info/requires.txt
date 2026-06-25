@@ -4,4 +4,3 @@ lightkurve
 matplotlib
 scipy
 moviepy
-os

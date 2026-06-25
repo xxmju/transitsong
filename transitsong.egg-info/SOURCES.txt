@@ -1,5 +1,6 @@
 README.md
 pyproject.toml
+tests/tests.py
 transitsong/__init__.py
 transitsong/main.py
 transitsong.egg-info/PKG-INFO
