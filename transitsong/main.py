@@ -233,13 +233,13 @@ class Transit:
         final_clip.close()
 
 
-tic = 124029677 
-sector = 33
-window = [2217, 2219]
-planet = Transit(tic, sector, window=window)
-planet.make_sound_arr()
-planet.make_video()
-planet.combine()
+# tic = 124029677 
+# sector = 33
+# window = [2217, 2219]
+# planet = Transit(tic, sector, window=window)
+# planet.make_sound_arr()
+# planet.make_video()
+# planet.combine()
 
 
 
