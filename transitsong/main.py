@@ -10,8 +10,8 @@ import os
 from pathlib import Path
 
 #set matplotlib preferences
-plt.style.use(os.getcwd() + '/text.mplstyle')
 
+#plt.style.use('text.mplstyle')
 
 class Transit:
     """A program that makes an animation with audio for an input TESS lightcurve.
